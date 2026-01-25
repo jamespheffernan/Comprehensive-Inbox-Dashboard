@@ -1,0 +1,64 @@
+{
+  "name": "inbox-zero-dashboard",
+  "version": "0.1.0",
+  "description": "GTD-style live dashboard for tracking all inboxes with inbox-zero timers",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.cjs",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "build:electron": "tsc -b && ELECTRON=true vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "electron": "ELECTRON=true electron .",
+    "electron:dev": "concurrently \"npm run dev\" \"wait-on http://localhost:5176 && VITE_DEV_SERVER_PORT=5176 ELECTRON=true electron .\"",
+    "electron:build": "npm run build:electron && electron-builder",
+    "electron:rebuild": "electron-rebuild",
+    "postinstall": "electron-rebuild",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.7.0",
+    "chokidar": "^4.0.3",
+    "dexie": "^4.0.10",
+    "googleapis": "^144.0.0",
+    "imapflow": "^1.0.171",
+    "lucide-react": "^0.468.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "concurrently": "^9.1.2",
+    "electron": "^33.3.1",
+    "electron-builder": "^25.1.8",
+    "electron-rebuild": "^3.2.9",
+    "eslint": "^9.17.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6",
+    "vitest": "^2.1.8",
+    "wait-on": "^8.0.1"
+  },
+  "build": {
+    "appId": "com.inbox-zero-dashboard.app",
+    "productName": "Inbox Zero Dashboard",
+    "directories": {
+      "output": "dist-electron"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "node_modules/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.productivity",
+      "target": "dmg"
+    }
+  }
+}
